@@ -67,15 +67,17 @@ public class Store : MonoBehaviour {
     }
     
     private void _OnSellItemButtonClicked(int num) {
-        int index = ((num == 0) ? 1 : 0);
+        int index = 1 - num;
         m_SellItemTabs[index].gameObject.SetActive(false);
         m_SellItemTabs[num].gameObject.SetActive(true);
     }
 
     private void _OnBuyItemButtonClicked(int num) {
         for(int i = 0; i < m_BuyItemTabs.Length; i++) {
-            m_BuyItemTabs[i].gameObject.SetActive(false);
+            if(i == num)
+                m_BuyItemTabs[i].gameObject.SetActive(true);
+            else
+                m_BuyItemTabs[i].gameObject.SetActive(false);
         }
-        m_BuyItemTabs[num].gameObject.SetActive(true);
     }   
 }

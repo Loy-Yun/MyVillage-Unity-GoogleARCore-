@@ -5,13 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/MyVillage/Scenes/MyVillage.unity
     guid: f449c599639e578488d7083e7f4473f8
   - enabled: 0
     path: Assets/MyVillage/Scenes/MyVillage_SJ.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/MyVillage/Scenes/MyVillage_SH2.unity
     guid: d316f5e8356d8154d8432351cc79d937
   m_configObjects: {}

@@ -14,22 +14,27 @@ public class Add : MonoBehaviour
     [SerializeField] private GameObject m_AddWindow = null;
     [SerializeField] private Button m_AddButton = null;
     [SerializeField] private Button m_BackButton = null;
+
     [SerializeField] private Button[] m_TabButtonList = new Button[7];
     [SerializeField] private Button[] m_HouseList = new Button[2];
     [SerializeField] private Button[] m_TreeList = new Button[2];
     [SerializeField] private Button[] m_FarmList = new Button[3];
     [SerializeField] private GameObject[] m_TabList = new GameObject[7];
+
     [SerializeField] private GameObject m_FixAlertPanel = null;
-    [SerializeField] private Button m_YesButton = null;
-    [SerializeField] private Button m_NoButton = null;
+    [SerializeField] private Button m_FixButton = null;
+    [SerializeField] private Button m_RotateButton = null;
+    [SerializeField] private Button m_FixBackButton = null;
+
     [SerializeField] private GameObject[] HouseObj = new GameObject[2];
     [SerializeField] private GameObject[] TreeObj = new GameObject[2];
     [SerializeField] private GameObject[] FarmObj = new GameObject[3];
+
     private Touch touch;
     private GameObject addObj;
-    private bool fix = false;
-    private bool addState = false;
-    private float speedModifier;
+    private bool add = false;
+    private Quaternion rotationY;
+    private float speedModifier = 0.001f;
 
 
     // Start is called before the first frame update
@@ -58,13 +63,14 @@ public class Add : MonoBehaviour
             m_FarmList[buttonIndex].onClick.AddListener(() => _OnFarmButtonClicked(buttonIndex));
         }
 
-        m_YesButton.onClick.AddListener(_OnYesButtonClicked);
-        m_NoButton.onClick.AddListener(_OnNoButtonClicked);
+        m_FixButton.onClick.AddListener(_OnFixButtonClicked);
+        m_RotateButton.onClick.AddListener(_OnRotateButtonClicked);
+        m_FixBackButton.onClick.AddListener(_OnFixBackButtonClicked);
     }
 
     void Update()
     {
-        if (addState == true)
+        if (add)
         {
             if (Input.touchCount > 0)
             {
@@ -78,16 +84,11 @@ public class Add : MonoBehaviour
                 }
 
                 // Should not handle input if the player is pointing on UI.
-                if (!EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+                */
+                if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
                 {
                     return;
                 }
-
-                if (touch.phase == TouchPhase.Began)
-                {
-
-                }
-                */
 
                 // Move the object
                 if (touch.phase == TouchPhase.Moved)
@@ -97,11 +98,6 @@ public class Add : MonoBehaviour
                         addObj.transform.position.y,
                         addObj.transform.position.z + touch.deltaPosition.y * speedModifier);
                 }
-
-                else if (touch.phase == TouchPhase.Ended)
-                {
-                    m_FixAlertPanel.gameObject.SetActive(true);
-                } 
             }
         }
     }
@@ -134,47 +130,73 @@ public class Add : MonoBehaviour
 
     private void _OnHouseButtonClicked(int idx) {
         m_AddWindow.SetActive(false);
-        addState = true;
+        add = true;
 
         Vector3 pos = GameObject.Find("ARController").GetComponent<ARController>().Floor.transform.position;
         GameObject.Find("ARController").GetComponent<ARController>().Character.SetActive(false);
+        GameObject.Find("ARController").GetComponent<ARController>().Controller.SetActive(false);
 
         addObj = Instantiate(HouseObj[idx], pos, Quaternion.identity);
         addObj.transform.parent = GameObject.Find("FloorPrototype64x01x64").transform;
         addObj.transform.localScale = new Vector3(3f, 3f, 3f);
+
+        m_FixAlertPanel.gameObject.SetActive(true);
     }
 
     private void _OnTreeButtonClicked(int idx) {
         m_AddWindow.SetActive(false);
-        addState = true;
+        add = true;
 
         Vector3 pos = GameObject.Find("ARController").GetComponent<ARController>().Floor.transform.position;
         GameObject.Find("ARController").GetComponent<ARController>().Character.SetActive(false);
+        GameObject.Find("ARController").GetComponent<ARController>().Controller.SetActive(false);
 
         addObj = Instantiate(TreeObj[idx], pos, Quaternion.identity);
         addObj.transform.parent = GameObject.Find("FloorPrototype64x01x64").transform;
         addObj.transform.localScale = new Vector3(3f, 3f, 3f);
+
+        m_FixAlertPanel.gameObject.SetActive(true);
     }
 
     private void _OnFarmButtonClicked(int idx) {
         m_AddWindow.SetActive(false);
-        addState = true;
+        add = true;
 
         Vector3 pos = GameObject.Find("ARController").GetComponent<ARController>().Floor.transform.position;
         GameObject.Find("ARController").GetComponent<ARController>().Character.SetActive(false);
+        GameObject.Find("ARController").GetComponent<ARController>().Controller.SetActive(false);
 
         addObj = Instantiate(FarmObj[idx], pos, Quaternion.identity);
         addObj.transform.parent = GameObject.Find("FloorPrototype64x01x64").transform;
         addObj.transform.localScale = new Vector3(3f, 3f, 3f);
+
+        m_FixAlertPanel.gameObject.SetActive(true);
     }
 
-    private void _OnYesButtonClicked() {
+    private void _OnFixButtonClicked() {
         m_FixAlertPanel.gameObject.SetActive(false);
-        addState = false;
+        add = false;
+
+        GameObject.Find("ARController").GetComponent<ARController>().Character.SetActive(true);
+        GameObject.Find("ARController").GetComponent<ARController>().Controller.SetActive(true);
     }
 
-    private void _OnNoButtonClicked() {
+    private void _OnRotateButtonClicked()
+    {
+        addObj.transform.Rotate(0f, -90f, 0f);
+        //rotationY = Quaternion.Euler(0f, -90f, 0f);
+        //-touch.deltaPosition.x * speedModifier
+        //addObj.transform.rotation = rotationY * transform.rotation;
+    }
+
+    private void _OnFixBackButtonClicked()
+    {
         m_FixAlertPanel.gameObject.SetActive(false);
-        addState = true;
+        m_AddWindow.SetActive(true);
+        add = false;
+        Destroy(addObj);
+        
+        GameObject.Find("ARController").GetComponent<ARController>().Character.SetActive(true);
+        GameObject.Find("ARController").GetComponent<ARController>().Controller.SetActive(true);
     }
 }

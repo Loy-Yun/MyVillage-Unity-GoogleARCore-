@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/MyVillage/Scenes/MyVillage_SH2.unity
+- path: Assets/MyVillage/Scenes/MyVillage.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

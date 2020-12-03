@@ -91,7 +91,7 @@ namespace GoogleARCore.Examples.Common {
 
 
         private void _OnMenuButtonClicked() {
-            m_MenuText.text = "설정설정설정";
+            m_MenuText.text = "";
             m_MenuWindow.SetActive(true);
         }
 

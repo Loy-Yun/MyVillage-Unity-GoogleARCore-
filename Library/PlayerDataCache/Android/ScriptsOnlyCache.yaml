@@ -10,6 +10,8 @@ ScriptsOnlyBuild:
     - ARController
     - Add
     - DBManager
+    - DirtController
+    - Farmcontroller
     - GoogleARCore.ARCoreBackgroundRenderer
     - GoogleARCore.ARCoreCameraConfigFilter
     - GoogleARCore.ARCoreSession
@@ -25,11 +27,6 @@ ScriptsOnlyBuild:
     - Store
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
-    Unity.TextMeshPro.dll:
-    - TMPro.TMP_FontAsset
-    - TMPro.TMP_Settings
-    - TMPro.TMP_SpriteAsset
-    - TMPro.TMP_StyleSheet
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
@@ -67,9 +64,9 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 48
       Script: {instanceID: 0}
-    - Class: 49
-      Script: {instanceID: 0}
     - Class: 54
+      Script: {instanceID: 0}
+    - Class: 64
       Script: {instanceID: 0}
     - Class: 65
       Script: {instanceID: 0}
@@ -88,8 +85,6 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 108
-      Script: {instanceID: 0}
-    - Class: 109
       Script: {instanceID: 0}
     - Class: 114
       Script: {instanceID: 11284}
@@ -114,8 +109,6 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 12226}
     - Class: 114
-      Script: {instanceID: 12228}
-    - Class: 114
       Script: {instanceID: 12276}
     - Class: 114
       Script: {instanceID: 12364}
@@ -138,11 +131,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13064}
     - Class: 114
-      Script: {instanceID: 13124}
-    - Class: 114
       Script: {instanceID: 13136}
-    - Class: 114
-      Script: {instanceID: 13146}
     - Class: 114
       Script: {instanceID: 13168}
     - Class: 114
@@ -156,13 +145,15 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13698}
     - Class: 114
-      Script: {instanceID: 13762}
-    - Class: 114
       Script: {instanceID: 13920}
     - Class: 114
       Script: {instanceID: 14002}
     - Class: 114
       Script: {instanceID: 14062}
+    - Class: 114
+      Script: {instanceID: 14104}
+    - Class: 114
+      Script: {instanceID: 14134}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -1032,7 +1023,7 @@ ScriptsOnlyBuild:
     className: NetworkStartPosition
   - hash:
       serializedVersion: 2
-      Hash: 465ae484a23f54d519450e097e6850d5
+      Hash: 4a39b302d67d8c039406294c8e78e04e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Add
@@ -1134,7 +1125,7 @@ ScriptsOnlyBuild:
     className: Platformer2DUserControl
   - hash:
       serializedVersion: 2
-      Hash: dab4c5ac799dc0e01c67146a73be0d49
+      Hash: c5678721f7dd5601c5df6234128fac98
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ARController

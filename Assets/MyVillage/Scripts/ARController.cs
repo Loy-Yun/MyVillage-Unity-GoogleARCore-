@@ -17,6 +17,8 @@ public class ARController : MonoBehaviour {
     public GameObject Floor;
     public GameObject Character;
     public GameObject FAlert;
+    public GameObject Controller;
+    public GameObject DetectedPlaneVisualizer;
     private Alert a;
     private const float k_PrefabRotation = 180.0f;
     private bool m_IsQuitting = false;
@@ -61,8 +63,10 @@ public class ARController : MonoBehaviour {
                 if (first) {
                     // Create floor and character at the hit pose.
                     // Instantiate(prefab, hit.Pose.position, Quaternion.identity);
-                    Floor.SetActive(true);
                     Character.SetActive(true);
+                    Floor.SetActive(true);
+                    
+                    Controller.SetActive(true);
                 }
                 first = false;
                 
@@ -70,12 +74,14 @@ public class ARController : MonoBehaviour {
                     // Create an anchor to allow ARCore to track the hitpoint as understanding of
                     // the physical world evolves.
                     var anchor = hit.Trackable.CreateAnchor(hit.Pose);
-                    Floor.transform.position = hit.Pose.position;
                     Character.transform.position = hit.Pose.position;
+                    Floor.transform.position = hit.Pose.position;
+                    
 
                     // Make game object a child of the anchor.
-                    Floor.transform.parent = anchor.transform;
                     Character.transform.parent = anchor.transform;
+                    Floor.transform.parent = anchor.transform;
+                    
 
                     // Make alert to fix or not
                     FAlert.gameObject.SetActive(true);
@@ -84,6 +90,7 @@ public class ARController : MonoBehaviour {
                         print("Yes callback");
                         Destroy(FAlert.gameObject);
                         fix = true;
+                        DetectedPlaneVisualizer.gameObject.SetActive(false);
                     });
                     a.SetNoCallback(() => {
                         print("No callback");
@@ -94,9 +101,7 @@ public class ARController : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// Check and update the application lifecycle.
-    /// </summary>
+    
     private void _UpdateApplicationLifecycle() {
         // Exit the app when the 'back' button is pressed.
         if (Input.GetKey(KeyCode.Escape)) {
@@ -115,8 +120,7 @@ public class ARController : MonoBehaviour {
             return;
         }
 
-        // Quit if ARCore was unable to connect and give Unity some time for the toast to
-        // appear.
+        // Quit if ARCore was unable to connect and give Unity some time for the toast to appear.
         if (Session.Status == SessionStatus.ErrorPermissionNotGranted) {
             _ShowAndroidToastMessage("Camera permission is needed to run this application.");
             m_IsQuitting = true;
@@ -137,10 +141,7 @@ public class ARController : MonoBehaviour {
         Application.Quit();
     }
 
-    /// <summary>
-    /// Show an Android toast message.
-    /// </summary>
-    /// <param name="message">Message string to show in the toast.</param>
+    
     private void _ShowAndroidToastMessage(string message) {
         AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
         AndroidJavaObject unityActivity =
