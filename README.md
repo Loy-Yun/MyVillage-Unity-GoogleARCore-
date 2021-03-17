@@ -2,4 +2,4 @@
 
 2020.06 ~ 2020.11
 
-AR Game w Unity
+AR Game w. Unity
